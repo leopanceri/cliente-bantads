@@ -1,5 +1,6 @@
 package br.net.dac.cliente.rest;
 
+
 public class ClienteDTO {
 	private Long id;	
 	private String nome;	
@@ -9,24 +10,8 @@ public class ClienteDTO {
 	private String cep;
 	private String endereco;
 	private String telefone;
+	private StatusConta status;
 	
-	public ClienteDTO(Long id, String nome, String cpf, Double salario, String email, String cep, String endereco,
-			String telefone) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.salario = salario;
-		this.email = email;
-		this.cep = cep;
-		this.endereco = endereco;
-		this.telefone = telefone;
-	}
-
-	public ClienteDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public Long getId() {
 		return id;
@@ -90,6 +75,14 @@ public class ClienteDTO {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public StatusConta getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusConta status) {
+		this.status = status;
 	}
 	
 	

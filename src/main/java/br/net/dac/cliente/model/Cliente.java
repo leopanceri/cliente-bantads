@@ -4,12 +4,12 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "clientes")
+@Table (name = "cliente")
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	//@GeneratedValue
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name="id")
 	private Long id;
 	@Column (name="nome")
@@ -25,7 +25,9 @@ public class Cliente implements Serializable {
 	@Column (name="endereco")
 	private String endereco;
 	@Column (name="telefone")
-	private String telefone;   
+	private String telefone; 
+	@Column (name="status")  //pendente, aprovada, rejeitada, encerrada
+	private String status;
 	
 	
 	public Cliente() {
@@ -34,7 +36,7 @@ public class Cliente implements Serializable {
 	}
 
 	public Cliente(Long id, String nome, String cpf, Double salario, String email, String cep,
-			String endereco, String status) {
+			String endereco, String telefone, String status) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -43,7 +45,8 @@ public class Cliente implements Serializable {
 		this.email = email;
 		this.cep = cep;
 		this.endereco = endereco;
-		this.telefone = status;
+		this.telefone = telefone;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -109,6 +112,16 @@ public class Cliente implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 	
 	
 	

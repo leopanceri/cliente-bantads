@@ -32,6 +32,7 @@ public class ClienteREST {
 	
 	@PostMapping("/cadastro")
 	public ClienteDTO inserirCliente(@RequestBody ClienteDTO cliente) {
+		cliente.setStatus(StatusConta.ANALISE);
 		repoCliente.save(mapperCliente.map(cliente, Cliente.class));
 		Cliente c = repoCliente.findByEmail(cliente.getEmail());
 		return mapperCliente.map(c, ClienteDTO.class);
