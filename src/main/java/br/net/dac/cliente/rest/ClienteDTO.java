@@ -1,40 +1,17 @@
-package br.net.dac.cliente.model;
+package br.net.dac.cliente.rest;
 
-import java.io.Serializable;
-import jakarta.persistence.*;
-
-@Entity
-@Table (name = "clientes")
-public class Cliente implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	//@GeneratedValue
-	@Column (name="id")
-	private Long id;
-	@Column (name="nome")
-	private String nome;
-	@Column (name="cpf")
-	private String cpf;
-	@Column (name="salario")
-	private Double salario;
-	@Column (name="email")
+public class ClienteDTO {
+	private Long id;	
+	private String nome;	
+	private String cpf;	
+	private Double salario;	
 	private String email;
-	@Column (name="cep")
 	private String cep;
-	@Column (name="endereco")
 	private String endereco;
-	@Column (name="telefone")
-	private String telefone;   
+	private String telefone;
 	
-	
-	public Cliente() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Cliente(Long id, String nome, String cpf, Double salario, String email, String cep,
-			String endereco, String status) {
+	public ClienteDTO(Long id, String nome, String cpf, Double salario, String email, String cep, String endereco,
+			String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -43,7 +20,12 @@ public class Cliente implements Serializable {
 		this.email = email;
 		this.cep = cep;
 		this.endereco = endereco;
-		this.telefone = status;
+		this.telefone = telefone;
+	}
+
+	public ClienteDTO() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -109,14 +91,6 @@ public class Cliente implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
