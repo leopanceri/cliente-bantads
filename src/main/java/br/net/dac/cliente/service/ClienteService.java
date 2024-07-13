@@ -47,7 +47,7 @@ public class ClienteService {
     }
 
 	public ClienteDTO createClient(ClienteDTO newcliente) {
-		newcliente.setStatus(StatusConta.ANALISE);
+		newcliente.setStatus(StatusConta.PENDENTE);
 		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 		repoCliente.save(cliente);
 		return mapperCliente.map(cliente, ClienteDTO.class);
