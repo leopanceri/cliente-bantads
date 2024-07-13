@@ -20,10 +20,9 @@ public class Cliente implements Serializable {
 	private Double salario;
 	@Column (name="email")
 	private String email;
-	@Column (name="cep")
-	private String cep;
-	@Column (name="endereco")
-	private String endereco;
+	@OneToOne()
+	@JoinColumn(name="enderecoId")
+	private Endereco endereco;
 	@Column (name="telefone")
 	private String telefone; 
 	@Column (name="status")  //pendente, aprovada, rejeitada, encerrada
@@ -31,19 +30,15 @@ public class Cliente implements Serializable {
 	
 	
 	public Cliente() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(Long id, String nome, String cpf, Double salario, String email, String cep,
-			String endereco, String telefone, String status) {
-		super();
+	public Cliente(Long id, String nome, String cpf, Double salario, String email,
+			Endereco endereco, String telefone, String status) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.salario = salario;
 		this.email = email;
-		this.cep = cep;
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.status = status;
@@ -89,19 +84,11 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 

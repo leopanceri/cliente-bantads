@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 
 import br.net.dac.cliente.model.Cliente;
+import br.net.dac.cliente.model.Endereco;
 import br.net.dac.cliente.repository.ClienteRepository;
+import br.net.dac.cliente.repository.EnderecoRepository;
 import br.net.dac.cliente.rest.ClienteDTO;
 import br.net.dac.cliente.rest.StatusConta;
 
@@ -18,7 +20,9 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repoCliente;
 	@Autowired
-	private ModelMapper mapperCliente;
+	private EnderecoRepository repoEndereco;
+	@Autowired
+	private ModelMapper mapperCliente, mapperEndereco;
 
 	public List<ClienteDTO> selectAllClients() {	
 		List<Cliente> lista= repoCliente.findAll();
@@ -47,8 +51,11 @@ public class ClienteService {
     }
 
 	public ClienteDTO createClient(ClienteDTO newcliente) {
+		Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
+		repoEndereco.save(end);
 		newcliente.setStatus(StatusConta.PENDENTE);
 		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
+		cliente.setEndereco(end);
 		repoCliente.save(cliente);
 		return mapperCliente.map(cliente, ClienteDTO.class);
 	}
