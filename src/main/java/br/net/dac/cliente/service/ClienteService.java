@@ -56,6 +56,7 @@ public class ClienteService {
 		newcliente.setStatus(StatusConta.PENDENTE);
 		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 		cliente.setEndereco(end);
+		cliente.setEndereco(end.getId());
 		repoCliente.save(cliente);
 		return mapperCliente.map(cliente, ClienteDTO.class);
 	}

@@ -23,6 +23,7 @@ public class Cliente implements Serializable {
 	@OneToOne()
 	@JoinColumn(name="enderecoId")
 	private Endereco endereco;
+	private Long endereco;
 	@Column (name="telefone")
 	private String telefone; 
 	@Column (name="status")  //pendente, aprovada, rejeitada, encerrada
@@ -34,6 +35,7 @@ public class Cliente implements Serializable {
 
 	public Cliente(Long id, String nome, String cpf, Double salario, String email,
 			Endereco endereco, String telefone, String status) {
+			Long endereco, String telefone, String status) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
@@ -85,10 +87,12 @@ public class Cliente implements Serializable {
 	}
 
 	public Endereco getEndereco() {
+	public Long getEndereco() {
 		return endereco;
 	}
 
 	public void setEndereco(Endereco endereco) {
+	public void setEndereco(Long endereco) {
 		this.endereco = endereco;
 	}
 
