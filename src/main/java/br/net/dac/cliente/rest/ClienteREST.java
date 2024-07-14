@@ -24,8 +24,9 @@ public class ClienteREST {
 	private ClienteService clienteService;	
 	
 	@PostMapping("/cadastro")
-	public ResponseEntity<ClienteDTO> inserirCliente(@RequestBody ClienteDTO newcliente) {
-		return ResponseEntity.ok(clienteService.createClient(newcliente));
+	public ResponseEntity<HttpStatus> inserirCliente(@RequestBody ClienteDTO newcliente) {
+		clienteService.createClient(newcliente);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/clientes")
