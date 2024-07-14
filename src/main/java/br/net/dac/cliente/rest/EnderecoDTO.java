@@ -9,6 +9,7 @@ public class EnderecoDTO {
 	private String complemento;
 	private String cidade;
 	private String uf;
+	
 	public Long getId() {
 		return id;
 	}
