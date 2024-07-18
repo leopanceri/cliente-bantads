@@ -1,5 +1,6 @@
 package br.net.dac.cliente.rest;
 
+//import br.net.dac.cliente.model.Endereco;
 
 public class ClienteDTO {
 	private Long id;	
@@ -7,8 +8,7 @@ public class ClienteDTO {
 	private String cpf;	
 	private Double salario;	
 	private String email;
-	private String cep;
-	private String endereco;
+	private EnderecoDTO endereco;
 	private String telefone;
 	private StatusConta status;
 	
@@ -53,21 +53,6 @@ public class ClienteDTO {
 		this.email = email;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
 
 	public String getTelefone() {
 		return telefone;
@@ -83,6 +68,14 @@ public class ClienteDTO {
 
 	public void setStatus(StatusConta status) {
 		this.status = status;
+	}
+
+	public EnderecoDTO getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoDTO endereco) {
+		this.endereco = endereco;
 	}
 	
 	

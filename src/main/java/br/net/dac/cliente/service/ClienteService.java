@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 
 import br.net.dac.cliente.model.Cliente;
+import br.net.dac.cliente.model.Endereco;
 import br.net.dac.cliente.repository.ClienteRepository;
+import br.net.dac.cliente.repository.EnderecoRepository;
 import br.net.dac.cliente.rest.ClienteDTO;
 import br.net.dac.cliente.rest.StatusConta;
 
@@ -18,7 +20,9 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repoCliente;
 	@Autowired
-	private ModelMapper mapperCliente;
+	private EnderecoRepository repoEndereco;
+	@Autowired
+	private ModelMapper mapperCliente, mapperEndereco;
 
 	public List<ClienteDTO> selectAllClients() {	
 		List<Cliente> lista= repoCliente.findAll();
@@ -36,8 +40,9 @@ public class ClienteService {
 	}
 
 	public ClienteDTO updateCliente(long id, ClienteDTO dto) {
+		Endereco e = mapperEndereco.map(dto.getEndereco(), Endereco.class);
+		repoEndereco.save(e);
 		Cliente cliente = mapperCliente.map(dto, Cliente.class);
-		cliente.setId(id);
 		cliente = repoCliente.save(cliente);
 		return mapperCliente.map(cliente, ClienteDTO.class);
 	}
@@ -45,13 +50,24 @@ public class ClienteService {
 	public void deleteCliente (long clienteId) {
         repoCliente.deleteById(clienteId);
     }
-
+	
+	
 	public ClienteDTO createClient(ClienteDTO newcliente) {
-		newcliente.setStatus(StatusConta.PENDENTE);
-		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
-		repoCliente.save(cliente);
-		return mapperCliente.map(cliente, ClienteDTO.class);
+		try {
+			if(repoCliente.existsByCpf(newcliente.getCpf())){
+				throw new RuntimeException("CPF já cadastrado no sistema");
+			}
+			Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
+			repoEndereco.save(end);
+			newcliente.setStatus(StatusConta.PENDENTE);
+			Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
+			cliente.setEndereco(end);
+			repoCliente.save(cliente);
+			return mapperCliente.map(cliente, ClienteDTO.class);
+		}catch (Exception e) {
+			throw new RuntimeException("Falha ao salvar novo cliente: " + e.getMessage());
+		
+		}
 	}
 	
-
 }
