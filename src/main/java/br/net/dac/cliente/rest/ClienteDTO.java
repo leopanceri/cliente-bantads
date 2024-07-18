@@ -9,7 +9,6 @@ public class ClienteDTO {
 	private Double salario;	
 	private String email;
 	private EnderecoDTO endereco;
-	private Long endereco;
 	private String telefone;
 	private StatusConta status;
 	
@@ -72,12 +71,10 @@ public class ClienteDTO {
 	}
 
 	public EnderecoDTO getEndereco() {
-	public Long getEndereco() {
 		return endereco;
 	}
 
 	public void setEndereco(EnderecoDTO endereco) {
-	public void setEndereco(Long endereco) {
 		this.endereco = endereco;
 	}
 	

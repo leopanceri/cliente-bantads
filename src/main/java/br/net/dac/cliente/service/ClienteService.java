@@ -40,8 +40,9 @@ public class ClienteService {
 	}
 
 	public ClienteDTO updateCliente(long id, ClienteDTO dto) {
+		Endereco e = mapperEndereco.map(dto.getEndereco(), Endereco.class);
+		repoEndereco.save(e);
 		Cliente cliente = mapperCliente.map(dto, Cliente.class);
-		cliente.setId(id);
 		cliente = repoCliente.save(cliente);
 		return mapperCliente.map(cliente, ClienteDTO.class);
 	}
@@ -49,17 +50,24 @@ public class ClienteService {
 	public void deleteCliente (long clienteId) {
         repoCliente.deleteById(clienteId);
     }
-
+	
+	
 	public ClienteDTO createClient(ClienteDTO newcliente) {
-		Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
-		repoEndereco.save(end);
-		newcliente.setStatus(StatusConta.PENDENTE);
-		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
-		cliente.setEndereco(end);
-		cliente.setEndereco(end.getId());
-		repoCliente.save(cliente);
-		return mapperCliente.map(cliente, ClienteDTO.class);
+		try {
+			if(repoCliente.existsByCpf(newcliente.getCpf())){
+				throw new RuntimeException("CPF já cadastrado no sistema");
+			}
+			Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
+			repoEndereco.save(end);
+			newcliente.setStatus(StatusConta.PENDENTE);
+			Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
+			cliente.setEndereco(end);
+			repoCliente.save(cliente);
+			return mapperCliente.map(cliente, ClienteDTO.class);
+		}catch (Exception e) {
+			throw new RuntimeException("Falha ao salvar novo cliente: " + e.getMessage());
+		
+		}
 	}
 	
-
 }

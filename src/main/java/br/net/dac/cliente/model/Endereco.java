@@ -32,6 +32,7 @@ public class Endereco implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Endereco(Long id, String cep, String tipo, String logradouro, int numero, String complemento,
 			String cidade, String uf) {
 		super();
 		this.id = id;
