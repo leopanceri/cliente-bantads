@@ -23,11 +23,13 @@ public class ClienteREST {
 	@Autowired
 	private ClienteService clienteService;	
 	
+	/*
 	@PostMapping("/cadastro")
 	public ResponseEntity<HttpStatus> inserirCliente(@RequestBody ClienteDTO newcliente) {
 		clienteService.createClient(newcliente);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	*/
 	
 	@GetMapping("/clientes")
 	public ResponseEntity <List<ClienteDTO>> obterTodosClientes(){

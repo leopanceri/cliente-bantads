@@ -12,6 +12,21 @@ public class ClienteDTO {
 	private String telefone;
 	private StatusConta status;
 	
+	public ClienteDTO() {
+		
+	}
+	
+	public ClienteDTO(Long id, String nome, String cpf, Double salario, String email, EnderecoDTO endereco,
+			String telefone, StatusConta status) {
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.salario = salario;
+		this.email = email;
+		this.endereco = endereco;
+		this.telefone = telefone;
+		this.status = status;
+	}
 
 	public Long getId() {
 		return id;

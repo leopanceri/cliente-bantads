@@ -10,6 +10,22 @@ public class EnderecoDTO {
 	private String cidade;
 	private String uf;
 	
+	public EnderecoDTO() {
+		
+	}
+	
+	public EnderecoDTO(Long id, String cep, String tipo, String logradouro, int numero, String complemento,
+			String cidade, String uf) {
+		this.id = id;
+		this.cep = cep;
+		this.tipo = tipo;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.cidade = cidade;
+		this.uf = uf;
+	}
+	
 	public Long getId() {
 		return id;
 	}
