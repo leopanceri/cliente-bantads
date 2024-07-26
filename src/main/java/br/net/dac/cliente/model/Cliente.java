@@ -1,13 +1,21 @@
 package br.net.dac.cliente.model;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table (name = "cliente")
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name="id")
@@ -24,11 +32,11 @@ public class Cliente implements Serializable {
 	@JoinColumn(name="endereco_id")
 	private Endereco endereco;
 	@Column (name="telefone")
-	private String telefone; 
+	private String telefone;
 	@Column (name="status")  //pendente, aprovada, rejeitada, encerrada
 	private String status;
-	
-	
+
+
 	public Cliente() {
 	}
 
@@ -108,5 +116,5 @@ public class Cliente implements Serializable {
 		this.status = status;
 	}
 
-		
+
 }

@@ -13,9 +13,9 @@ public class ClienteQueueListener {
 	private ClienteService clienteService;
 
 	@RabbitListener(queues="clientes.v1.cliente-novo")
-	public void onClientCreated(ClienteDTO clienteDto) {
-		System.out.println("Id recebido " + clienteDto.getNome());
-        System.out.println("Valor recebido " + clienteDto.getEmail());
-        clienteService.createClient(clienteDto);
+	public ClienteTransfer onClientCreated (ClienteTransfer clienteTransfer) {
+        ClienteDTO c = new ClienteDTO();
+        c= clienteService.createClient(clienteTransfer.getClienteDto());
+        return new ClienteTransfer(c, "NULL", "CRIADO");
 	}
 }

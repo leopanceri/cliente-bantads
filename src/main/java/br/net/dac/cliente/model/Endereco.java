@@ -1,13 +1,19 @@
 package br.net.dac.cliente.model;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "endereco")
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name= "id")
@@ -26,7 +32,7 @@ public class Endereco implements Serializable {
 	private String cidade;
 	@Column (name= "uf")
 	private String uf;
-	
+
 	public Endereco() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -112,10 +118,10 @@ public class Endereco implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 
 }

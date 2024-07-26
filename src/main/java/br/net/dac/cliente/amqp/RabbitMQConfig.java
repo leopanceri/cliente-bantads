@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-	
-	@Bean
-	public Jackson2JsonMessageConverter messageConverter() {
+
+    @Bean
+    Jackson2JsonMessageConverter messageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
-	
-	@Bean
-	public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFacctory,
-										Jackson2JsonMessageConverter messageConverter) {
+
+    @Bean
+    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFacctory,
+                               Jackson2JsonMessageConverter messageConverter) {
 		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFacctory);
 		rabbitTemplate.setMessageConverter(messageConverter);
 		return rabbitTemplate;
