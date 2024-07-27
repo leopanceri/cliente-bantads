@@ -1,16 +1,15 @@
 package br.net.dac.cliente.repository;
 
-import br.net.dac.cliente.model.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.data.jpa.repository.*;
+import br.net.dac.cliente.model.Cliente;
 
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-	
-	public Cliente findByEmail(String email);
 
+	public Cliente findByEmail(String email);
 	public Cliente findByCpf(String cpf);
 	public boolean existsByCpf(String cpf);
-	
-	
+
+
 }

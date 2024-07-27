@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jakarta.persistence.EntityNotFoundException;
 
 import br.net.dac.cliente.model.Cliente;
 import br.net.dac.cliente.model.Endereco;
@@ -14,6 +13,7 @@ import br.net.dac.cliente.repository.ClienteRepository;
 import br.net.dac.cliente.repository.EnderecoRepository;
 import br.net.dac.cliente.rest.ClienteDTO;
 import br.net.dac.cliente.rest.StatusConta;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClienteService {
@@ -24,7 +24,7 @@ public class ClienteService {
 	@Autowired
 	private ModelMapper mapperCliente, mapperEndereco;
 
-	public List<ClienteDTO> selectAllClients() {	
+	public List<ClienteDTO> selectAllClients() {
 		List<Cliente> lista= repoCliente.findAll();
 		return lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList());
 	}
@@ -46,12 +46,12 @@ public class ClienteService {
 		cliente = repoCliente.save(cliente);
 		return mapperCliente.map(cliente, ClienteDTO.class);
 	}
-	
+
 	public void deleteCliente (long clienteId) {
         repoCliente.deleteById(clienteId);
     }
-	
-	
+
+
 	public ClienteDTO createClient(ClienteDTO newcliente) {
 		try {
 			if(repoCliente.existsByCpf(newcliente.getCpf())){
@@ -66,8 +66,8 @@ public class ClienteService {
 			return mapperCliente.map(cliente, ClienteDTO.class);
 		}catch (Exception e) {
 			throw new RuntimeException("Falha ao salvar novo cliente: " + e.getMessage());
-		
+
 		}
 	}
-	
+
 }
