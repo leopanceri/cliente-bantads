@@ -3,19 +3,16 @@ package br.net.dac.cliente.amqp;
 import br.net.dac.cliente.rest.ClienteDTO;
 
 public class ClienteTransfer {
-	
+
 	private ClienteDTO clienteDto;
-	private String action;
 	private String message;
-	
+
 	public ClienteTransfer() {
-		
+
 	}
 
-	public ClienteTransfer(ClienteDTO clienteDto, String action, String message) {
-		super();
+	public ClienteTransfer(ClienteDTO clienteDto, String message) {
 		this.clienteDto = clienteDto;
-		this.action = action;
 		this.message = message;
 	}
 
@@ -27,14 +24,6 @@ public class ClienteTransfer {
 		this.clienteDto = clienteDto;
 	}
 
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
 	public String getMessage() {
 		return message;
 	}
@@ -42,6 +31,6 @@ public class ClienteTransfer {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
+
+
 }
