@@ -19,18 +19,17 @@ public class ClienteQueueListener {
 	@RabbitListener(queues="clientes.v1.cliente-novo")
 	public void recebeCliente (ClienteTransfer clienteTransfer) {
 		ClienteDTO c = new ClienteDTO();
-		ClienteTransfer ct = new ClienteTransfer();
 		if(clienteTransfer.getMessage().equals("CRIAR")) {
 			c= clienteService.createClient(clienteTransfer.getClienteDto());
-			ct.setClienteDto(c);
-			ct.setMessage("CRIADO");
+			clienteTransfer.setClienteDto(c);
+			clienteTransfer.setMessage("CRIADO");
 		}
 		if(clienteTransfer.getMessage().equals("ATUALIZAR")) {
 			c= clienteService.updateCliente(clienteTransfer.getClienteDto().getId(),
 					clienteTransfer.getClienteDto());
-			ct.setClienteDto(c);
-			ct.setMessage("ATUALIZADO");
+			clienteTransfer.setClienteDto(c);
+			clienteTransfer.setMessage("ATUALIZADO");
 		}
-		template.convertAndSend("cliente-criado",ct);
+		template.convertAndSend("cliente-resposta",clienteTransfer);
 	}
 }
