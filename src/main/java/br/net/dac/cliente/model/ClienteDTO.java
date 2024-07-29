@@ -1,8 +1,10 @@
 package br.net.dac.cliente.model;
 
+import java.io.Serializable;
+
 //import br.net.dac.cliente.model.Endereco;
 
-public class ClienteDTO {
+public class ClienteDTO implements Serializable {
 	private Long id;
 	private String nome;
 	private String cpf;

@@ -11,6 +11,7 @@ import br.net.dac.cliente.service.ClienteService;
 
 @Component
 public class ClienteQueueListener {
+	
 	@Autowired
 	private ClienteService clienteService;
 
@@ -19,9 +20,8 @@ public class ClienteQueueListener {
 
 	
 
-	@SuppressWarnings("finally")
 	@RabbitListener(queues="cliente-crud")
-	public ClienteTransfer recebeCliente (@Payload ClienteTransfer clienteTransfer) {
+	public void recebeCliente (@Payload ClienteTransfer clienteTransfer) {
 		ClienteDTO c = new ClienteDTO();
 		try {
 			if(clienteTransfer.getMessage().equals("CRIAR")) {
@@ -35,12 +35,10 @@ public class ClienteQueueListener {
 				clienteTransfer.setClienteDto(c);
 				clienteTransfer.setMessage("ATUALIZADO");
 			}
-		} catch(Exception e) {
-			clienteTransfer.setClienteDto(null);
-			clienteTransfer.setMessage(e.getLocalizedMessage());
-		}finally{
 			template.convertAndSend("cliente-resposta",clienteTransfer);
-			return clienteTransfer;
-		}	
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
 }
