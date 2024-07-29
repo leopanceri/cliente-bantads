@@ -3,6 +3,7 @@ package br.net.dac.cliente.consumer;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.net.dac.cliente.model.ClienteDTO;
@@ -16,8 +17,11 @@ public class ClienteQueueListener {
 	@Autowired
 	private RabbitTemplate template;
 
+	
+
+	@SuppressWarnings("finally")
 	@RabbitListener(queues="cliente-crud")
-	public void recebeCliente (ClienteTransfer clienteTransfer) {
+	public ClienteTransfer recebeCliente (@Payload ClienteTransfer clienteTransfer) {
 		ClienteDTO c = new ClienteDTO();
 		try {
 			if(clienteTransfer.getMessage().equals("CRIAR")) {
@@ -31,10 +35,12 @@ public class ClienteQueueListener {
 				clienteTransfer.setClienteDto(c);
 				clienteTransfer.setMessage("ATUALIZADO");
 			}
-			template.convertAndSend("cliente-resposta",clienteTransfer);
 		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
+			clienteTransfer.setClienteDto(null);
+			clienteTransfer.setMessage(e.getLocalizedMessage());
+		}finally{
+			template.convertAndSend("cliente-resposta",clienteTransfer);
+			return clienteTransfer;
+		}	
 	}
 }
