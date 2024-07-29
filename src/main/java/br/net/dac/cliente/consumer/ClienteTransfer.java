@@ -1,6 +1,6 @@
-package br.net.dac.cliente.amqp;
+package br.net.dac.cliente.consumer;
 
-import br.net.dac.cliente.rest.ClienteDTO;
+import br.net.dac.cliente.model.ClienteDTO;
 
 public class ClienteTransfer {
 

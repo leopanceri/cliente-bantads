@@ -1,4 +1,4 @@
-package br.net.dac.cliente.rest;
+package br.net.dac.cliente.model;
 
 //import br.net.dac.cliente.model.Endereco;
 

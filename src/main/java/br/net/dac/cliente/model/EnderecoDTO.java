@@ -1,4 +1,4 @@
-package br.net.dac.cliente.rest;
+package br.net.dac.cliente.model;
 
 public class EnderecoDTO {
 	private Long id;
