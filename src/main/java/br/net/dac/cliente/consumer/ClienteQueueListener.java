@@ -21,7 +21,7 @@ public class ClienteQueueListener {
 	
 
 	@RabbitListener(queues="cliente-crud")
-	public void recebeCliente (@Payload ClienteTransfer clienteTransfer) {
+	public ClienteTransfer recebeCliente (@Payload ClienteTransfer clienteTransfer) {
 		ClienteDTO c = new ClienteDTO();
 		try {
 			if(clienteTransfer.getMessage().equals("CRIAR")) {
@@ -36,8 +36,11 @@ public class ClienteQueueListener {
 				clienteTransfer.setMessage("ATUALIZADO");
 			}
 			template.convertAndSend("cliente-resposta",clienteTransfer);
+			return clienteTransfer;
 		} catch(Exception e) {
-			e.printStackTrace();
+			clienteTransfer.setClienteDto(null);
+			clienteTransfer.setMessage(e.getMessage());
+			return clienteTransfer;
 		}
 	}
 	
