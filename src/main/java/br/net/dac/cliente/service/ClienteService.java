@@ -48,15 +48,16 @@ public class ClienteService {
 
 
 	public ClienteDTO createClient(ClienteDTO newcliente) {
+		Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
+		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 		try {
-			Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
 			repoEndereco.save(end);
 			newcliente.setStatus(StatusConta.PENDENTE);
-			Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 			cliente.setEndereco(end);
 			repoCliente.save(cliente);
 			return mapperCliente.map(cliente, ClienteDTO.class);
 		}catch (Exception e) {
+			repoEndereco.delete(end);			
 			throw new RuntimeException("Falha ao salvar novo cliente: " + e.getMessage());
 		}
 	}
