@@ -1,5 +1,6 @@
 package br.net.dac.cliente.consumer;
 
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ClienteQueueListener {
 	
 
 	@RabbitListener(queues="cliente-crud")
-	public ClienteTransfer recebeCliente (@Payload ClienteTransfer clienteTransfer) {
+	public void recebeCliente (@Payload ClienteTransfer clienteTransfer) {
 		ClienteDTO c = new ClienteDTO();
 		try {
 			if(clienteTransfer.getMessage().equals("CRIAR")) {
@@ -36,12 +37,9 @@ public class ClienteQueueListener {
 				clienteTransfer.setMessage("ATUALIZADO");
 			}
 			template.convertAndSend("cliente-resposta",clienteTransfer);
-			return clienteTransfer;
 		} catch(Exception e) {
-			clienteTransfer.setClienteDto(null);
-			clienteTransfer.setMessage(e.getMessage());
-			return clienteTransfer;
-		}
+			template.convertAndSend("erro-cadastro", clienteTransfer );
+		}			
 	}
 	
 }

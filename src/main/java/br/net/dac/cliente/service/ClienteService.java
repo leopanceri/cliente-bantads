@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import br.net.dac.cliente.model.Endereco;
 import br.net.dac.cliente.model.StatusConta;
 import br.net.dac.cliente.repository.ClienteRepository;
 import br.net.dac.cliente.repository.EnderecoRepository;
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClienteService {
@@ -31,34 +31,37 @@ public class ClienteService {
 		List<Cliente> lista= repoCliente.findAll();
 		return ResponseEntity.status(HttpStatus.OK).body(lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList()));
 	}
-
-	public ResponseEntity<ClienteDTO> selectByCpf(String cpf) {
-		Cliente c = repoCliente.findByCpf(cpf);
-		return ResponseEntity.status(HttpStatus.OK).body(mapperCliente.map(c, ClienteDTO.class));
+	
+	public ClienteDTO selectByCpf(String cpf) {
+			Cliente c = repoCliente.findByCpf(cpf);
+			return mapperCliente.map(c, ClienteDTO.class);
 	}
 
-	public ResponseEntity<ClienteDTO> selectById(long id) {
-		Optional<Cliente> c = repoCliente.findById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(mapperCliente.map(c, ClienteDTO.class));
+	public ClienteDTO selectClienteById(long id) {
+			Optional<Cliente> c = repoCliente.findById(id);
+			return mapperCliente.map(c, ClienteDTO.class);
 	}
 
-	public void deleteCliente (long clienteId) {
-        repoCliente.deleteById(clienteId);
+	public String deleteCliente (long clienteId) {
+			Long enderecoId = selectClienteById(clienteId).getEndereco().getId();
+			repoCliente.deleteById(clienteId);
+			repoEndereco.deleteById(enderecoId);	
+			return "CLIENTE REMOVIDO";
     }
 
 
-	public ClienteDTO createClient(ClienteDTO newcliente) {
+	public ClienteDTO createClient(ClienteDTO newcliente){
+		newcliente.setStatus(StatusConta.PENDENTE);
 		Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
 		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 		try {
 			repoEndereco.save(end);
-			newcliente.setStatus(StatusConta.PENDENTE);
 			cliente.setEndereco(end);
 			repoCliente.save(cliente);
 			return mapperCliente.map(cliente, ClienteDTO.class);
 		}catch (Exception e) {
-			repoEndereco.delete(end);			
-			throw new RuntimeException("Falha ao salvar novo cliente: " + e.getMessage());
+			repoEndereco.delete(end);
+			throw new RuntimeException("Falha ao cadastrar novo cliente: " + e.getMessage());
 		}
 	}
 	
