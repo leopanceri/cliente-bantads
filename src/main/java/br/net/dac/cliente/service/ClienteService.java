@@ -53,6 +53,11 @@ public class ClienteService {
 			repoEndereco.deleteById(enderecoId);	
 			return "CLIENTE REMOVIDO";
     }
+	
+	public void alteraStatus(String status, long id) {
+		ClienteDTO c = selectClienteById(id);
+		c.setStatus(StatusConta.valueOf(status));
+	}
 
 
 	public ClienteDTO createClient(ClienteDTO newcliente){
