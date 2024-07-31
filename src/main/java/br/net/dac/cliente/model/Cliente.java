@@ -112,8 +112,8 @@ public class Cliente implements Serializable {
 		return status;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatus(String pendente) {
+		this.status = pendente;
 	}
 
 
