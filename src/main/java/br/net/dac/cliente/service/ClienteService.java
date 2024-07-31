@@ -33,7 +33,7 @@ public class ClienteService {
 	}
 	
 	public ResponseEntity<List<ClienteDTO>> selectClientesAnalise(){
-		List<Cliente> lista= repoCliente.findClientesAnalise();
+		List<Cliente> lista= repoCliente.findByStatus("PENDENTE");
 		return ResponseEntity.status(HttpStatus.OK).body(lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList()));
 	}
 	
