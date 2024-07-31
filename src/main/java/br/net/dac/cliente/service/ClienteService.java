@@ -32,6 +32,11 @@ public class ClienteService {
 		return ResponseEntity.status(HttpStatus.OK).body(lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList()));
 	}
 	
+	public ResponseEntity<List<ClienteDTO>> selectClientesAnalise(){
+		List<Cliente> lista= repoCliente.findClientesAnalise();
+		return ResponseEntity.status(HttpStatus.OK).body(lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList()));
+	}
+	
 	public ClienteDTO selectByCpf(String cpf) {
 			Cliente c = repoCliente.findByCpf(cpf);
 			return mapperCliente.map(c, ClienteDTO.class);
