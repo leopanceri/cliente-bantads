@@ -27,8 +27,17 @@ public class ClienteREST {
 			return clienteService.selectAllClients();
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getClass());
+		}	
+	}
+	
+	
+	@GetMapping("/gerente/inicio")
+	public ResponseEntity obterCientesAnalise(){
+		try {
+			return clienteService.selectClientesAnalise();
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getClass());
 		}
-		
 	}
 	
 	@GetMapping("/busca/{cpf}")
@@ -38,7 +47,6 @@ public class ClienteREST {
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.OK).body("CLIENTE NÂO ENCONTRADO - CPF: " + cpf);
 		}
-		
 	}
 
 	@DeleteMapping("/clientes/{id}")
