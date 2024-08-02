@@ -56,12 +56,12 @@ public class ClienteService {
 	
 	public void alteraStatus(String status, long id) {
 		ClienteDTO c = selectClienteById(id);
-		c.setStatus(StatusConta.valueOf(status));
+		c.setStatus(status);
 	}
 
 
 	public ClienteDTO createClient(ClienteDTO newcliente){
-		newcliente.setStatus(StatusConta.PENDENTE);
+		newcliente.setStatus("PENDENTE");
 		Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
 		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 		try {
@@ -79,8 +79,13 @@ public class ClienteService {
 		try {
 			Endereco e = mapperEndereco.map(dto.getEndereco(), Endereco.class);
 			repoEndereco.save(e);
-			Cliente cliente = mapperCliente.map(dto, Cliente.class);
-			cliente = repoCliente.save(cliente);
+			Optional<Cliente> c = repoCliente.findById(id);
+			Cliente cliente = c.get();
+			dto.setStatus(cliente.getStatus());
+			dto.setStatusSet(cliente.getStatusSet());
+			dto.setMotivo(cliente.getMotivo());
+			mapperCliente.map(cliente, ClienteDTO.class);
+			repoCliente.save(cliente);
 			return mapperCliente.map(cliente, ClienteDTO.class);
 		}catch (Exception e) {
 			throw new RuntimeException("Falha ao salvar novo cliente: " + e.getMessage());

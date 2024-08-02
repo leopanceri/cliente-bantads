@@ -33,7 +33,7 @@ public class ClienteREST {
 	}
 	
 	
-	@GetMapping("/gerente/inicio")
+	@GetMapping("/gerentes/inicio")
 	public ResponseEntity obterCientesAnalise(){
 		try {
 			return clienteService.selectClientesAnalise();
@@ -63,6 +63,15 @@ public class ClienteREST {
 	@PutMapping("/alterastatus/{id}")
 	public void alteraStatus( @PathVariable("id")long id, @RequestBody String status) {
 		clienteService.alteraStatus(status, id);
+	}
+	
+	@GetMapping("/buscaid/{id}")
+	public ResponseEntity<Object> obterClienteid(@PathVariable("id") long id){ 
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectClienteById(id));	
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.OK).body("CLIENTE NÂO ENCONTRADO - id: " + id);
+		}
 	}
 	
 
