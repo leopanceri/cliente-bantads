@@ -20,8 +20,6 @@ public class Endereco implements Serializable {
 	private Long id;
 	@Column (name= "cep")
 	private String cep;
-	@Column (name= "tipo")
-	private String tipo;
 	@Column (name= "logradouro")
 	private String logradouro;
 	@Column (name= "numero")
@@ -38,12 +36,11 @@ public class Endereco implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Endereco(Long id, String cep, String tipo, String logradouro, int numero, String complemento,
+	public Endereco(Long id, String cep, String logradouro, int numero, String complemento,
 			String cidade, String uf) {
 		super();
 		this.id = id;
 		this.cep = cep;
-		this.tipo = tipo;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -65,14 +62,6 @@ public class Endereco implements Serializable {
 
 	public void setCep(String cep) {
 		this.cep = cep;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public String getLogradouro() {

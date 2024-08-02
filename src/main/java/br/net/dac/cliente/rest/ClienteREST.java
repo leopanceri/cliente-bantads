@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import br.net.dac.cliente.service.ClienteService;
 
@@ -27,8 +29,17 @@ public class ClienteREST {
 			return clienteService.selectAllClients();
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getClass());
+		}	
+	}
+	
+	
+	@GetMapping("/gerentes/inicio")
+	public ResponseEntity obterCientesAnalise(){
+		try {
+			return clienteService.selectClientesAnalise();
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getClass());
 		}
-		
 	}
 	
 	@GetMapping("/busca/{cpf}")
@@ -38,7 +49,6 @@ public class ClienteREST {
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.OK).body("CLIENTE NÂO ENCONTRADO - CPF: " + cpf);
 		}
-		
 	}
 
 	@DeleteMapping("/clientes/{id}")
@@ -50,17 +60,21 @@ public class ClienteREST {
 		}
 	}
 
-	/*
-	@GetMapping("/clientes/{id}")
-	public ResponseEntity<Object> obterClienteId(@PathVariable("id") long id){
-			try{
-				ClienteDTO clienteDto = clienteService.selectClienteById(id);
-				return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
-			}catch(Exception e) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CLIENTE NÃO ENCONTRADO");
-			}
+	@PutMapping("/alterastatus/{id}")
+	public void alteraStatus( @PathVariable("id")long id, @RequestBody String status) {
+		clienteService.alteraStatus(status, id);
 	}
-*/
+	
+	@GetMapping("/buscaid/{id}")
+	public ResponseEntity<Object> obterClienteid(@PathVariable("id") long id){ 
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectClienteById(id));	
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.OK).body("CLIENTE NÂO ENCONTRADO - id: " + id);
+		}
+	}
+	
+
 
 	
 }

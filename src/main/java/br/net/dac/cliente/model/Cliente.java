@@ -1,6 +1,7 @@
 package br.net.dac.cliente.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,28 +29,23 @@ public class Cliente implements Serializable {
 	private Double salario;
 	@Column (name="email")
 	private String email;
+	@Column (name="telefone")
+	private String telefone;
+	@Column (name="status")      //pendente, aprovada, rejeitada, encerrada
+	private String status;
+	@Column (name="statusset")
+	private LocalDate statusSet;
+	@Column (name="motivo")
+	private String motivo;
 	@OneToOne()
 	@JoinColumn(name="endereco_id")
 	private Endereco endereco;
-	@Column (name="telefone")
-	private String telefone;
-	@Column (name="status")  //pendente, aprovada, rejeitada, encerrada
-	private String status;
 
+	
 
 	public Cliente() {
-	}
-
-	public Cliente(Long id, String nome, String cpf, Double salario, String email,
-			Endereco endereco, String telefone, String status) {
-		this.id = id;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.salario = salario;
-		this.email = email;
-		this.endereco = endereco;
-		this.telefone = telefone;
-		this.status = status;
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -92,14 +88,6 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
 	public String getTelefone() {
 		return telefone;
 	}
@@ -112,9 +100,33 @@ public class Cliente implements Serializable {
 		return status;
 	}
 
-	public void setStatus(String pendente) {
-		this.status = pendente;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
+	public LocalDate getStatusSet() {
+		return statusSet;
+	}
+
+	public void setStatusSet(LocalDate statusSet) {
+		this.statusSet = statusSet;
+	}
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+	
 
 }
