@@ -64,17 +64,8 @@ public class ClienteREST {
 	public void alteraStatus( @PathVariable("id")long id, @RequestBody String status) {
 		clienteService.alteraStatus(status, id);
 	}
-	/*
-	@GetMapping("/clientes/{id}")
-	public ResponseEntity<Object> obterClienteId(@PathVariable("id") long id){
-			try{
-				ClienteDTO clienteDto = clienteService.selectClienteById(id);
-				return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
-			}catch(Exception e) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CLIENTE NÃO ENCONTRADO");
-			}
-	}
-*/
+	
+
 
 	
 }
