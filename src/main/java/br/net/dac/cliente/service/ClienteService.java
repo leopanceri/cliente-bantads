@@ -92,4 +92,9 @@ public class ClienteService {
 		}	
 	}
 
+	public List<ClienteDTO> selectByIds(List<Long> ids) {
+		List<Cliente> clientes = repoCliente.findAllById(ids);
+		return clientes.stream().map(cliente -> mapperCliente.map(cliente, ClienteDTO.class)).collect(Collectors.toList());
+	}
+	
 }
