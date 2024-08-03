@@ -7,6 +7,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.net.dac.cliente.model.ClienteDTO;
+import br.net.dac.cliente.model.StatusConta;
 import br.net.dac.cliente.service.ClienteService;
 
 @Component
@@ -49,4 +50,20 @@ public class ClienteQueueListener {
 		}			
 	}
 	
+	@RabbitListener(queues=FILA_ATUALIZA_STATUS)
+	public void recebeCliente (@Payload ClienteDTO clienteDto) {
+		try {
+			switch (clienteDto.getStatus()) {
+			case APROVADO:
+				//gerar senha , enviar email e alterar conta para ativa
+				break;
+			case REJEITADO:
+				//enviar email 
+				break;				
+			}
+			clienteService.updateCliente(clienteDto.getId(), clienteDto);
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+	}
 }
