@@ -1,5 +1,6 @@
 package br.net.dac.cliente.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -7,6 +8,8 @@ import java.util.stream.Collectors;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,19 +30,19 @@ public class ClienteService {
 	@Autowired
 	private ModelMapper mapperCliente, mapperEndereco;
 
-	public ResponseEntity<List<ClienteDTO>> selectAllClients() {
+	public List<ClienteDTO> selectAllClients() {
 		List<Cliente> lista= repoCliente.findAll();
-		return ResponseEntity.status(HttpStatus.OK).body(lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList()));
+		return lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList());
 	}
-	
-	public ResponseEntity<List<ClienteDTO>> selectClientesAnalise(){
+
+	public List<ClienteDTO> selectClientesAnalise(){
 		List<Cliente> lista= repoCliente.findByStatus("PENDENTE");
-		return ResponseEntity.status(HttpStatus.OK).body(lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList()));
+		return lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList());
 	}
 	
-	public ClienteDTO selectByCpf(String cpf) {
-			Cliente c = repoCliente.findByCpf(cpf);
-			return mapperCliente.map(c, ClienteDTO.class);
+	public List<ClienteDTO> selectByCpf(String cpf) {
+			List<Cliente> lista = repoCliente.findByCpfContaining(cpf);
+			return lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList());
 	}
 
 	public ClienteDTO selectClienteById(long id) {
@@ -55,8 +58,8 @@ public class ClienteService {
     }
 	
 	public void alteraStatus(String status, long id) {
-		ClienteDTO c = selectClienteById(id);
-		c.setStatus(StatusConta.valueOf(status));
+		LocalDateTime ld = new LocalDateTime().now();
+		repoCliente.updateClienteStatus(status, id);
 	}
 
 
