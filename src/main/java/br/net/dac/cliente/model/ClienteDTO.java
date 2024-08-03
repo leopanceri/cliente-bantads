@@ -1,24 +1,22 @@
 package br.net.dac.cliente.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 //import br.net.dac.cliente.model.Endereco;
 
 public class ClienteDTO implements Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	private Long id;
 	private String nome;
 	private String cpf;
 	private Double salario;
 	private String email;
 	private String telefone;
-	private String status;
-	private LocalDate statusSet;
+	private StatusConta status;
+	private LocalDateTime statusSet;
 	private String motivo;
 	private EnderecoDTO endereco;
 
@@ -27,7 +25,7 @@ public class ClienteDTO implements Serializable {
 	}
 
 	public ClienteDTO(Long id, String nome, String cpf, Double salario, String email, String telefone,
-			String status, LocalDate statusSet, String motivo, EnderecoDTO endereco) {
+			StatusConta status, LocalDateTime statusSet, String motivo, EnderecoDTO endereco) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -39,6 +37,15 @@ public class ClienteDTO implements Serializable {
 		this.statusSet = statusSet;
 		this.motivo = motivo;
 		this.endereco = endereco;
+	}
+	
+
+	public ClienteDTO(Long id, StatusConta status, LocalDateTime statusSet, String motivo) {
+		super();
+		this.id = id;
+		this.status = status;
+		this.statusSet = statusSet;
+		this.motivo = motivo;
 	}
 
 	public Long getId() {
@@ -89,19 +96,19 @@ public class ClienteDTO implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public String getStatus() {
+	public StatusConta getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusConta status) {
 		this.status = status;
 	}
 
-	public LocalDate getStatusSet() {
+	public LocalDateTime getStatusSet() {
 		return statusSet;
 	}
 
-	public void setStatusSet(LocalDate statusSet) {
+	public void setStatusSet(LocalDateTime statusSet) {
 		this.statusSet = statusSet;
 	}
 
@@ -120,9 +127,6 @@ public class ClienteDTO implements Serializable {
 	public void setEndereco(EnderecoDTO endereco) {
 		this.endereco = endereco;
 	}
-
-	
-
 
 
 }

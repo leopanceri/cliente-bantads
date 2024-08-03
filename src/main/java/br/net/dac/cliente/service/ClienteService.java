@@ -56,12 +56,12 @@ public class ClienteService {
 	
 	public void alteraStatus(String status, long id) {
 		ClienteDTO c = selectClienteById(id);
-		c.setStatus(status);
+		c.setStatus(StatusConta.valueOf(status));
 	}
 
 
 	public ClienteDTO createClient(ClienteDTO newcliente){
-		newcliente.setStatus("PENDENTE");
+		newcliente.setStatus(StatusConta.PENDENTE);
 		Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
 		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 		try {
@@ -79,12 +79,11 @@ public class ClienteService {
 		try {
 			Endereco e = mapperEndereco.map(dto.getEndereco(), Endereco.class);
 			repoEndereco.save(e);
-			Optional<Cliente> c = repoCliente.findById(id);
-			Cliente cliente = c.get();
-			dto.setStatus(cliente.getStatus());
+			Cliente cliente = repoCliente.findById(id).get();
+			dto.setStatus(StatusConta.valueOf(cliente.getStatus()));
 			dto.setStatusSet(cliente.getStatusSet());
 			dto.setMotivo(cliente.getMotivo());
-			mapperCliente.map(cliente, ClienteDTO.class);
+			cliente = mapperCliente.map(dto, Cliente.class);
 			repoCliente.save(cliente);
 			return mapperCliente.map(cliente, ClienteDTO.class);
 		}catch (Exception e) {

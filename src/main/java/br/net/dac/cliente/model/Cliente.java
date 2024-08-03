@@ -2,6 +2,7 @@ package br.net.dac.cliente.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +35,7 @@ public class Cliente implements Serializable {
 	@Column (name="status")      //pendente, aprovada, rejeitada, encerrada
 	private String status;
 	@Column (name="statusset")
-	private LocalDate statusSet;
+	private LocalDateTime statusSet;
 	@Column (name="motivo")
 	private String motivo;
 	@OneToOne()
@@ -46,6 +47,23 @@ public class Cliente implements Serializable {
 	public Cliente() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public Cliente(Long id, String nome, String cpf, Double salario, String email, String telefone, String status,
+			LocalDateTime statusSet, String motivo, Endereco endereco) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.salario = salario;
+		this.email = email;
+		this.telefone = telefone;
+		this.status = status;
+		this.statusSet = statusSet;
+		this.motivo = motivo;
+		this.endereco = endereco;
 	}
 
 	public Long getId() {
@@ -104,11 +122,11 @@ public class Cliente implements Serializable {
 		this.status = status;
 	}
 
-	public LocalDate getStatusSet() {
+	public LocalDateTime getStatusSet() {
 		return statusSet;
 	}
 
-	public void setStatusSet(LocalDate statusSet) {
+	public void setStatusSet(LocalDateTime statusSet) {
 		this.statusSet = statusSet;
 	}
 
