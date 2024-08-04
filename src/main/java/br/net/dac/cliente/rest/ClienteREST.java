@@ -79,15 +79,14 @@ public class ClienteREST {
 	}
 	
 	@GetMapping("/clientes/ids")
-    public ResponseEntity<List<ClienteDTO>> obterClientesPorIds(@RequestParam List<Long> ids) {
-        try {
-            List<ClienteDTO> clientes = clienteService.selectByIds(ids);
-            return ResponseEntity.ok(clientes);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
+	public ResponseEntity<List<ClienteDTO>> obterClientesPorIds(@RequestParam List<Long> ids) {
+		try {
+			List<ClienteDTO> clientes = clienteService.selectByIds(ids);
+			return ResponseEntity.ok(clientes);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 
 	
 }
