@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.net.dac.cliente.model.StatusConta;
+import br.net.dac.cliente.producer.ClienteProducer;
 import br.net.dac.cliente.service.ClienteService;
 
 @CrossOrigin
@@ -23,6 +24,9 @@ public class ClienteREST {
 
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private ClienteProducer clienteProducer;
 
 	
 	@GetMapping("/clientes")

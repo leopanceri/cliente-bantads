@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 import br.net.dac.cliente.model.Cliente;
 import br.net.dac.cliente.model.ClienteDTO;
+import br.net.dac.cliente.model.ClienteTransfer;
 import br.net.dac.cliente.model.Endereco;
 import br.net.dac.cliente.model.StatusConta;
+import br.net.dac.cliente.producer.ClienteProducer;
 import br.net.dac.cliente.repository.ClienteRepository;
 import br.net.dac.cliente.repository.EnderecoRepository;
 
@@ -29,6 +31,9 @@ public class ClienteService {
 	private EnderecoRepository repoEndereco;
 	@Autowired
 	private ModelMapper mapperCliente, mapperEndereco;
+	
+	@Autowired
+	private ClienteProducer clienteProducer;
 
 	public List<ClienteDTO> selectAllClients() {
 		List<Cliente> lista= repoCliente.findAll();
@@ -58,8 +63,16 @@ public class ClienteService {
     }
 	
 	public void alteraStatus(String status, String motivo, long id) {
-		LocalDateTime ld = LocalDateTime.now();
-		repoCliente.updateClienteStatus(status, ld, motivo, id);
+		LocalDateTime time = LocalDateTime.now();
+		Cliente cliente = repoCliente.findById(id).get();
+		cliente.setStatus(status);
+		cliente.setStatusSet(time);
+		cliente.setMotivo(motivo);
+		repoCliente.save(cliente);
+		ClienteTransfer clienteTransfer = new ClienteTransfer();
+		clienteTransfer.setClienteDto(mapperCliente.map(cliente, ClienteDTO.class));
+		clienteTransfer.setMessage(status);
+		clienteProducer.enviaRespostaCliente(clienteTransfer);
 	}
 
 	public ClienteDTO createClient(ClienteDTO newcliente){
