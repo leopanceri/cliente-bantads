@@ -79,7 +79,7 @@ public class ClienteService {
 	}
 
 	public ClienteDTO createClient(ClienteDTO newcliente){
-		newcliente.setStatus(StatusConta.PENDENTE);
+		newcliente.setStatus("PENDENTE");
 		Endereco end = mapperEndereco.map(newcliente.getEndereco(), Endereco.class);
 		Cliente cliente = mapperCliente.map(newcliente, Cliente.class);
 		try {
@@ -98,8 +98,8 @@ public class ClienteService {
 			Endereco e = mapperEndereco.map(dto.getEndereco(), Endereco.class);
 			repoEndereco.save(e);
 			Cliente cliente = repoCliente.findById(id).get();
-			dto.setStatus(StatusConta.valueOf(cliente.getStatus()));
-			//dto.setStatusSet(cliente.getStatusSet());
+			dto.setStatus(cliente.getStatus());
+			dto.setStatusSet(cliente.getStatusSet());
 			dto.setMotivo(cliente.getMotivo());
 			cliente = mapperCliente.map(dto, Cliente.class);
 			repoCliente.save(cliente);

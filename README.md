@@ -17,7 +17,7 @@ CREATE TABLE cliente (
     email VARCHAR(255),
     telefone VARCHAR(255),
     status VARCHAR(225),
-    statusSet TIMESTAMP,
+    statusSet VARCHAR(225),
     motivo VARCHAR(225),
     endereco_id SERIAL,
     foreign key (endereco_id) references endereco (id)
