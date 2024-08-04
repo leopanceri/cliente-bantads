@@ -35,7 +35,7 @@ public class Cliente implements Serializable {
 	@Column (name="status")      //pendente, aprovada, rejeitada, encerrada
 	private String status;
 	@Column (name="statusset")
-	private LocalDateTime statusSet;
+	private String statusSet;
 	@Column (name="motivo")
 	private String motivo;
 	@OneToOne()
@@ -52,7 +52,7 @@ public class Cliente implements Serializable {
 	
 
 	public Cliente(Long id, String nome, String cpf, Double salario, String email, String telefone, String status,
-			LocalDateTime statusSet, String motivo, Endereco endereco) {
+			String statusSet, String motivo, Endereco endereco) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -122,11 +122,11 @@ public class Cliente implements Serializable {
 		this.status = status;
 	}
 
-	public LocalDateTime getStatusSet() {
+	public String getStatusSet() {
 		return statusSet;
 	}
 
-	public void setStatusSet(LocalDateTime statusSet) {
+	public void setStatusSet(String statusSet) {
 		this.statusSet = statusSet;
 	}
 
