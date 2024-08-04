@@ -22,7 +22,6 @@ public class ClienteQueueListener {
 	private ClienteProducer clienteProducer;
 
 	public static final String FILA_CLIENTE_CRUD = "FILA_CLIENTE_CRUD";
-	public static final String FILA_CLIENTE_RESPOSTA = "FILA_CLIENTE_RESPOSTA";
 	public static final String FILA_ATUALIZA_STATUS ="FILA_ATUALIZA_STATUS";
 
 	@RabbitListener(queues=FILA_CLIENTE_CRUD)

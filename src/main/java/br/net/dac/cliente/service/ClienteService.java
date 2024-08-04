@@ -96,7 +96,7 @@ public class ClienteService {
 			repoEndereco.save(e);
 			Cliente cliente = repoCliente.findById(id).get();
 			dto.setStatus(StatusConta.valueOf(cliente.getStatus()));
-			dto.setStatusSet(cliente.getStatusSet());
+			//dto.setStatusSet(cliente.getStatusSet());
 			dto.setMotivo(cliente.getMotivo());
 			cliente = mapperCliente.map(dto, Cliente.class);
 			repoCliente.save(cliente);
