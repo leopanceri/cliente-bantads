@@ -1,16 +1,14 @@
 package br.net.dac.cliente.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 //import br.net.dac.cliente.model.Endereco;
 
 public class ClienteDTO implements Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	private Long id;
 	private String nome;
 	private String cpf;
@@ -18,7 +16,7 @@ public class ClienteDTO implements Serializable {
 	private String email;
 	private String telefone;
 	private String status;
-	private LocalDate statusSet;
+	private String statusSet;
 	private String motivo;
 	private EnderecoDTO endereco;
 
@@ -27,7 +25,7 @@ public class ClienteDTO implements Serializable {
 	}
 
 	public ClienteDTO(Long id, String nome, String cpf, Double salario, String email, String telefone,
-			String status, LocalDate statusSet, String motivo, EnderecoDTO endereco) {
+			String status, String statusSet, String motivo, EnderecoDTO endereco) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -39,6 +37,15 @@ public class ClienteDTO implements Serializable {
 		this.statusSet = statusSet;
 		this.motivo = motivo;
 		this.endereco = endereco;
+	}
+	
+
+	public ClienteDTO(Long id, String status,String statusSet, String motivo) {
+		super();
+		this.id = id;
+		this.status = status;
+		this.statusSet = statusSet;
+		this.motivo = motivo;
 	}
 
 	public Long getId() {
@@ -97,11 +104,11 @@ public class ClienteDTO implements Serializable {
 		this.status = status;
 	}
 
-	public LocalDate getStatusSet() {
+	public String getStatusSet() {
 		return statusSet;
 	}
 
-	public void setStatusSet(LocalDate statusSet) {
+	public void setStatusSet(String statusSet) {
 		this.statusSet = statusSet;
 	}
 
@@ -120,9 +127,6 @@ public class ClienteDTO implements Serializable {
 	public void setEndereco(EnderecoDTO endereco) {
 		this.endereco = endereco;
 	}
-
-	
-
 
 
 }

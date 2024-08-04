@@ -7,6 +7,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.net.dac.cliente.model.ClienteDTO;
+import br.net.dac.cliente.model.ClienteTransfer;
+import br.net.dac.cliente.model.StatusConta;
+import br.net.dac.cliente.producer.ClienteProducer;
 import br.net.dac.cliente.service.ClienteService;
 
 @Component
@@ -14,13 +17,14 @@ public class ClienteQueueListener {
 	
 	@Autowired
 	private ClienteService clienteService;
-
-	@Autowired
-	private RabbitTemplate template;
-
 	
+	@Autowired
+	private ClienteProducer clienteProducer;
 
-	@RabbitListener(queues="FILA-CLIENTE-CRUD")
+	public static final String FILA_CLIENTE_CRUD = "FILA_CLIENTE_CRUD";
+	public static final String FILA_ATUALIZA_STATUS ="FILA_ATUALIZA_STATUS";
+
+	@RabbitListener(queues=FILA_CLIENTE_CRUD)
 	public void recebeCliente (@Payload ClienteTransfer clienteTransfer) {
 		ClienteDTO c = new ClienteDTO();
 		try {
@@ -37,13 +41,12 @@ public class ClienteQueueListener {
 			}
 			if(clienteTransfer.getMessage().equals("REMOVER")) {
 				clienteService.deleteCliente(c.getId());
-				clienteTransfer.setMessage("REMOVIDO");
-			}
-			template.convertAndSend("FILA-CLIENTE-RESPOSTA",clienteTransfer);
-			
+				clienteTransfer.setMessage("FALHA");
+			}	
+			clienteProducer.enviaRespostaCliente(clienteTransfer);	
 		} catch(Exception e) {
 			clienteTransfer.setMessage("FALHA");
-			template.convertAndSend("FILA-CLIENTE-RESPOSTA", clienteTransfer );
+			clienteProducer.enviaRespostaCliente(clienteTransfer);
 		}			
 	}
 	

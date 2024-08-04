@@ -1,8 +1,6 @@
-package br.net.dac.cliente.consumer;
+package br.net.dac.cliente.model;
 
 import java.io.Serializable;
-
-import br.net.dac.cliente.model.ClienteDTO;
 
 public class ClienteTransfer implements Serializable {
 

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.net.dac.cliente.model.ClienteDTO;
+import br.net.dac.cliente.model.StatusConta;
+import br.net.dac.cliente.producer.ClienteProducer;
 import br.net.dac.cliente.service.ClienteService;
 
 @CrossOrigin
@@ -25,12 +27,15 @@ public class ClienteREST {
 
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private ClienteProducer clienteProducer;
 
 	
 	@GetMapping("/clientes")
-	public ResponseEntity obterTodosClientes(){
+	public ResponseEntity<?> obterTodosClientes(){
 		try {
-			return clienteService.selectAllClients();
+			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectAllClients());
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getClass());
 		}	
@@ -38,15 +43,15 @@ public class ClienteREST {
 	
 	
 	@GetMapping("/gerentes/inicio")
-	public ResponseEntity obterCientesAnalise(){
+	public ResponseEntity<?> obterCientesPendente(){
 		try {
-			return clienteService.selectClientesAnalise();
+			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectClientesAnalise());
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getClass());
 		}
 	}
 	
-	@GetMapping("/busca/{cpf}")
+	@GetMapping("/gerentes/clientes/{cpf}")
 	public ResponseEntity<Object> obterClienteCpf(@PathVariable("cpf") String cpf){ 
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectByCpf(cpf));	
@@ -63,10 +68,27 @@ public class ClienteREST {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("CLIENTE NÃO FOI REMOVIDO");
 		}
 	}
-
-	@PutMapping("/alterastatus/{id}")
-	public void alteraStatus( @PathVariable("id")long id, @RequestBody String status) {
-		clienteService.alteraStatus(status, id);
+	
+	
+	@PutMapping("/gerentes/clientes/aprovar/{id}")
+	public ResponseEntity<?> aprovaCliente( @PathVariable("id")long id) {
+		try {
+			clienteService.alteraStatus(StatusConta.APROVADO.toString(), null, id);
+			return ResponseEntity.status(HttpStatus.OK).body("CADASTRO APROVADO");
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+		}
+		
+	}
+	
+	@PutMapping("/gerentes/clientes/rejeitar/{id}")
+	public ResponseEntity<?> rejeitaCliente( @PathVariable("id")long id, @RequestBody String motivo) {
+		try {
+			clienteService.alteraStatus(StatusConta.REJEITADO.toString(), motivo, id);
+			return ResponseEntity.status(HttpStatus.OK).body("CADASTRO REJEITADO");
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+		}
 	}
 	
 	@GetMapping("/buscaid/{id}")
