@@ -57,11 +57,10 @@ public class ClienteService {
 			return "CLIENTE REMOVIDO";
     }
 	
-	public void alteraStatus(String status, long id) {
-		LocalDateTime ld = new LocalDateTime().now();
-		repoCliente.updateClienteStatus(status, id);
+	public void alteraStatus(String status, String motivo, long id) {
+		LocalDateTime ld = LocalDateTime.now();
+		repoCliente.updateClienteStatus(status, ld, motivo, id);
 	}
-
 
 	public ClienteDTO createClient(ClienteDTO newcliente){
 		newcliente.setStatus(StatusConta.PENDENTE);

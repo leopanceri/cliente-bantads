@@ -64,10 +64,25 @@ public class ClienteREST {
 	
 	
 	@PutMapping("/gerentes/clientes/aprovar/{id}")
-	public void aprovaCliente( @PathVariable("id")long id) {
-		clienteService.alteraStatus(StatusConta.APROVADO, id);
+	public ResponseEntity<?> aprovaCliente( @PathVariable("id")long id) {
+		try {
+			clienteService.alteraStatus(StatusConta.APROVADO.toString(), null, id);
+			return ResponseEntity.status(HttpStatus.OK).body("CADASTRO APROVADO");
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+		}
+		
 	}
-
+	
+	@PutMapping("/gerentes/clientes/rejeitar/{id}")
+	public ResponseEntity<?> rejeitaCliente( @PathVariable("id")long id, @RequestBody String motivo) {
+		try {
+			clienteService.alteraStatus(StatusConta.REJEITADO.toString(), motivo, id);
+			return ResponseEntity.status(HttpStatus.OK).body("CADASTRO REJEITADO");
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getStackTrace());
+		}
+	}
 	
 	@GetMapping("/buscaid/{id}")
 	public ResponseEntity<Object> obterClienteid(@PathVariable("id") long id){ 
