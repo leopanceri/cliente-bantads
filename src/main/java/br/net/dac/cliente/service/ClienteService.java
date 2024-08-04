@@ -1,6 +1,7 @@
 package br.net.dac.cliente.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +35,8 @@ public class ClienteService {
 	
 	@Autowired
 	private ClienteProducer clienteProducer;
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");;
 
 	public List<ClienteDTO> selectAllClients() {
 		List<Cliente> lista= repoCliente.findAll();
@@ -63,7 +66,7 @@ public class ClienteService {
     }
 	
 	public void alteraStatus(String status, String motivo, long id) {
-		LocalDateTime time = LocalDateTime.now();
+		String time = LocalDateTime.now().format(formatter);
 		Cliente cliente = repoCliente.findById(id).get();
 		cliente.setStatus(status);
 		cliente.setStatusSet(time);
