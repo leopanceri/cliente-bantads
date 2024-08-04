@@ -16,7 +16,7 @@ public class ClienteDTO implements Serializable {
 	private String email;
 	private String telefone;
 	private StatusConta status;
-	private LocalDateTime statusSet;
+	//private LocalDateTime statusSet;
 	private String motivo;
 	private EnderecoDTO endereco;
 
@@ -25,7 +25,7 @@ public class ClienteDTO implements Serializable {
 	}
 
 	public ClienteDTO(Long id, String nome, String cpf, Double salario, String email, String telefone,
-			StatusConta status, LocalDateTime statusSet, String motivo, EnderecoDTO endereco) {
+			StatusConta status, String motivo, EnderecoDTO endereco) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -34,17 +34,17 @@ public class ClienteDTO implements Serializable {
 		this.email = email;
 		this.telefone = telefone;
 		this.status = status;
-		this.statusSet = statusSet;
+		//this.statusSet = statusSet;
 		this.motivo = motivo;
 		this.endereco = endereco;
 	}
 	
 
-	public ClienteDTO(Long id, StatusConta status, LocalDateTime statusSet, String motivo) {
+	public ClienteDTO(Long id, StatusConta status, String motivo) {
 		super();
 		this.id = id;
 		this.status = status;
-		this.statusSet = statusSet;
+		//this.statusSet = statusSet;
 		this.motivo = motivo;
 	}
 
@@ -103,7 +103,7 @@ public class ClienteDTO implements Serializable {
 	public void setStatus(StatusConta status) {
 		this.status = status;
 	}
-
+/*
 	public LocalDateTime getStatusSet() {
 		return statusSet;
 	}
@@ -111,7 +111,7 @@ public class ClienteDTO implements Serializable {
 	public void setStatusSet(LocalDateTime statusSet) {
 		this.statusSet = statusSet;
 	}
-
+*/
 	public String getMotivo() {
 		return motivo;
 	}

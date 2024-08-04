@@ -8,6 +8,8 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import br.net.dac.cliente.producer.ClienteProducer;
+
 
 @Configuration
 public class RabbitMQConfig {
@@ -24,6 +26,11 @@ public class RabbitMQConfig {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		return rabbitTemplate;
 	}
+    
+    @Bean
+    ClienteProducer clienteProducer() {
+    	return new ClienteProducer();
+    }
    
 
 }
