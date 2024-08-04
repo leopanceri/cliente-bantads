@@ -48,7 +48,7 @@ public class ClienteREST {
 		}
 	}
 	
-	@GetMapping("/clientes/{cpf}")
+	@GetMapping("/gerentes/clientes/{cpf}")
 	public ResponseEntity<Object> obterClienteCpf(@PathVariable("cpf") String cpf){ 
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectByCpf(cpf));	
