@@ -48,9 +48,14 @@ public class ClienteService {
 		return lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList());
 	}
 	
-	public List<ClienteDTO> selectByCpf(String cpf) {
+	public List<ClienteDTO> selectListaByCpf(String cpf) {
 			List<Cliente> lista = repoCliente.findByCpfContaining(cpf);
 			return lista.stream().map(e -> mapperCliente.map(e, ClienteDTO.class)).collect(Collectors.toList());
+	}
+	
+	public ClienteDTO selectByCpf(String cpf) {
+		Cliente cliente = repoCliente.findByCpf(cpf);
+		return mapperCliente.map(cliente, ClienteDTO.class);
 	}
 
 	public ClienteDTO selectClienteById(long id) {
@@ -101,6 +106,7 @@ public class ClienteService {
 			dto.setStatus(cliente.getStatus());
 			dto.setStatusSet(cliente.getStatusSet());
 			dto.setMotivo(cliente.getMotivo());
+			dto.setCpf(cliente.getCpf());
 			cliente = mapperCliente.map(dto, Cliente.class);
 			repoCliente.save(cliente);
 			return mapperCliente.map(cliente, ClienteDTO.class);
