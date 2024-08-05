@@ -115,6 +115,15 @@ public class ClienteREST {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+	
+	@GetMapping("/cliente/{id}")
+	public ResponseEntity<Object> buscaNomeId(@PathVariable("id") long id){ 
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectClienteById(id).getNome());
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.OK).body("CLIENTE NÂO ENCONTRADO - id: " + id);
+		}
+	}
 
 	
 }
