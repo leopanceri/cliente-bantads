@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.net.dac.cliente.model.MotivoRej;
 import br.net.dac.cliente.model.StatusConta;
 import br.net.dac.cliente.service.ClienteService;
 
