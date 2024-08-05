@@ -116,7 +116,7 @@ public class ClienteREST {
 		}
 	}
 	
-	@GetMapping("/cliente/{id}")
+	@GetMapping("/clientename/{id}")
 	public ResponseEntity<Object> buscaNomeId(@PathVariable("id") long id){ 
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectClienteById(id).getNome());
