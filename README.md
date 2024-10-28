@@ -1,3 +1,6 @@
+Micro serviço responsável pelo registro de clientes no sistema BANTADS, o banco de dados utilizado foi o PostegreSQL e os scripts para criação das tabelas estão disponíveis a seguir.
+-
+
 create table endereco (
 	id serial primary key,
 	cep varchar(225),
@@ -7,7 +10,6 @@ create table endereco (
 	cidade varchar(225),
 	uf varchar(225)
 );
-
 
 CREATE TABLE cliente (
     id SERIAL PRIMARY KEY,
@@ -22,11 +24,3 @@ CREATE TABLE cliente (
     endereco_id SERIAL,
     foreign key (endereco_id) references endereco (id)
 );
-
-select * from clientes.cliente;
-
-select * from clientes.endereco;
-
-
-delete from clientes.endereco;
-delete from clientes.cliente;
